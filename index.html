@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encuesta de Videojuegos</title>
+  <!-- Incluyendo Vue.js ruta local -->
+<script src="./js/Vue.js"></script>
+</head>
+<body>
+    <!-- Aquí se montará nuestra aplicación de Vue -->
+    <div id="app">
+        <h1>Encuesta de Videojuegos</h1>
+       
+     
+    
+        <!-- Pregunta: ¿Te gustan los videojuegos? -->
+        <p>¿Te gustan los videojuegos?</p>
+        <label>
+          <input type="radio" value="Sí" v-model="gustarVideojuegos" /> Sí
+        </label>
+        <label>
+          <input type="radio" value="No" v-model="gustarVideojuegos" /> No
+        </label>
+    
+        <!-- Mostrar las siguientes preguntas solo si selecciona "Sí" -->
+        <div v-if="gustarVideojuegos === 'Sí'">
+          <!-- Pregunta: ¿Cuántos años llevas jugando? -->
+          <p>¿Desde los cuantos anios llevas jugando?</p>
+          <input type="number" v-model="aniosJugando" min="0" />
+          <!-- Pregunta: Cuéntanos tu experiencia -->
+          <p>Cuéntanos tu experiencia jugando:</p>
+          <textarea v-model="experiencia" rows="4"></textarea>
+
+          <div v-if="experiencia.length > 0" >
+
+
+          <!-- Pregunta: Añadir videojuegos -->
+          <p>¿Cuántos videojuegos conoces?</p>
+          <input v-model="nuevoVideojuego" placeholder="Ingresa un videojuego" />
+          <button @click="agregarVideojuego">Agregar</button>
+        
+                   
+    
+          <!-- Lista de videojuegos agregados -->
+          <ul>
+            <li v-for="(videojuego, index) in videojuegos" :key="index">
+              {{ videojuego }}
+              <button @click="quitarVideojuego(index)">Eliminar</button>
+            </li>
+          </ul>
+          </div>
+      
+      </div>
+        <!-- Botón para mostrar los resultados -->
+        <button @click="mostrarResultados">Mostrar resultados</button>
+    
+        <!-- Mostrar los resultados -->
+        <div v-if="mostrar">
+          <h2>Resultados</h2>
+          <p>Te gustan los videojuegos: {{ gustarVideojuegos }}</p>
+          <p v-if="gustarVideojuegos === 'No'">Si no te gustan, que haces aqui?</p>
+          <p v-if="gustarVideojuegos === 'Sí'">Años jugando: {{ aniosJugando }}</p>
+          <p v-if="gustarVideojuegos === 'Sí'">Experiencia: {{ experiencia }}</p>
+          <p v-if="gustarVideojuegos === 'Sí'">Videojuegos: {{ videojuegos.join(', ') }}</p>
+        </div>
+      </div>
+    
+   
+      <script src="./js/script.js"> </script>
+    
+</body>
+</html>
